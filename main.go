@@ -1,20 +1,11 @@
-package main
+package gocroot
 
 import (
-	"log"
+	"github.com/gocroot/route"
 
-	"gocroot/config"
-
-	"github.com/gofiber/fiber/v2/middleware/cors"
-
-	"gocroot/url"
-
-	"github.com/gofiber/fiber/v2"
+	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
 )
 
-func main() {
-	site := fiber.New(config.Iteung)
-	site.Use(cors.New(config.Cors))
-	url.Web(site)
-	log.Fatal(site.Listen(config.IPPort))
+func init() {
+	functions.HTTP("WebHook", route.URL)
 }

@@ -1,18 +1,35 @@
 package config
 
 import (
-	"gocroot/helper"
+	"log"
+	"os"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gocroot/helper/at"
+	"github.com/gocroot/helper/atdb"
+	"github.com/whatsauth/itmodel"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-var IPPort, Net = helper.GetAddress()
+var PrivateKey string = os.Getenv("PRKEY")
 
-var Iteung = fiber.Config{
-	Prefork:       true,
-	CaseSensitive: true,
-	StrictRouting: true,
-	ServerHeader:  "GoCroot",
-	AppName:       "Golang Change Root",
-	Network:       Net,
+var AESKey string = os.Getenv("AESKEY")
+
+var IPPort, Net = at.GetAddress()
+
+var PhoneNumber string = os.Getenv("PHONENUMBER")
+
+var Profile itmodel.Profile
+
+func SetEnv() {
+	if ErrorMongoconn != nil {
+		log.Println(ErrorMongoconn.Error())
+	}
+	Profile, err := atdb.GetOneDoc[itmodel.Profile](Mongoconn, "profile", primitive.M{"phonenumber": PhoneNumber})
+	if err != nil {
+		log.Println(err)
+	}
+	PublicKeyWhatsAuth = Profile.PublicKey
+	WAAPIToken = Profile.Token
 }
+
+var GHAccessToken string = os.Getenv("GH_ACCESS_TOKEN")

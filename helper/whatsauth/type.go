@@ -1,4 +1,4 @@
-package model
+package whatsauth
 
 type Header struct {
 	Secret string `reqHeader:"secret"`
@@ -23,23 +23,31 @@ type IteungMessage struct {
 	Longitude          float64 `json:"longitude,omitempty" bson:"longitude,omitempty"`
 	LiveLoc            bool    `json:"liveloc,omitempty" bson:"liveloc,omitempty"`
 }
-
 type Profile struct {
 	Token       string `bson:"token"`
 	Phonenumber string `bson:"phonenumber"`
+	Secret      string `bson:"secret"`
+	URL         string `bson:"url"`
+	QRKeyword   string `bson:"qrkeyword"`
+	PublicKey   string `bson:"publickey"`
 }
-
-type WebHook struct {
+type Response struct {
+	Response string `json:"response"`
+	Info     string `json:"info,omitempty"`
+	Status   string `json:"status,omitempty"`
+	Location string `json:"location,omitempty"`
+}
+type WebHookInfo struct {
 	URL    string `bson:"url" json:"url"`
 	Secret string `bson:"secret" json:"secret"`
 }
 
 type User struct {
-	PhoneNumber string  `bson:"phonenumber" json:"phonenumber"`
-	DeviceID    uint16  `bson:"deviceid" json:"deviceid"`
-	WebHook     WebHook `bson:"webhook" json:"webhook"`
-	Mongostring string  `bson:"mongostring" json:"mongostring"`
-	Token       string  `bson:"token" json:"token"`
+	PhoneNumber string      `bson:"phonenumber" json:"phonenumber"`
+	DeviceID    uint16      `bson:"deviceid" json:"deviceid"`
+	WebHook     WebHookInfo `bson:"webhook" json:"webhook"`
+	Mongostring string      `bson:"mongostring" json:"mongostring"`
+	Token       string      `bson:"token" json:"token"`
 }
 
 type Reply struct {
@@ -50,10 +58,6 @@ type TextMessage struct {
 	To       string `json:"to"`
 	IsGroup  bool   `json:"isgroup,omitempty"`
 	Messages string `json:"messages"`
-}
-
-type Response struct {
-	Response string `json:"response"`
 }
 
 type WhatsauthRequest struct {
