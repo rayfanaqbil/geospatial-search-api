@@ -1,4 +1,4 @@
-package route
+package url
 
 import (
 	"net/http"
@@ -196,6 +196,10 @@ func URL(w http.ResponseWriter, r *http.Request) {
 	// Delete Pemesanan
 	case method == "DELETE" && path == "/pemesanan/delete":
 		controller.DeleteDataPemesanan(w, r)
+
+	//gis
+	case method == "GET" && path == "/nearby-road":
+		controller.NearbyRoadHandler(w, r)
 
 	// Google Auth
 	default:

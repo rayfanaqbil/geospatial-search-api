@@ -1,0 +1,50 @@
+info:
+  contact: {}
+paths:
+  /nearby-road:
+    get:
+      consumes:
+      - application/json
+      description: Mengembalikan daftar jalan terdekat dalam jarak 1 km dari koordinat
+        yang diberikan
+      parameters:
+      - description: Latitude koordinat
+        in: query
+        name: latitude
+        required: true
+        type: number
+      - description: Longitude koordinat
+        in: query
+        name: longitude
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Menemukan jalan terdekat berdasarkan koordinat
+      tags:
+      - gis
+swagger: "2.0"

@@ -10,7 +10,19 @@ import (
     "github.com/gocroot/config"
 )
 
-
+// NearbyRoadHandler godoc
+// @Summary Menemukan jalan terdekat berdasarkan koordinat
+// @Description Mengembalikan daftar jalan terdekat dalam jarak 1 km dari koordinat yang diberikan
+// @Tags gis
+// @Accept json
+// @Produce json
+// @Param latitude query float64 true "Latitude koordinat"
+// @Param longitude query float64 true "Longitude koordinat"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /nearby-road [get]
 func NearbyRoadHandler(respw http.ResponseWriter, req *http.Request) {
     latitude, errLat := strconv.ParseFloat(req.URL.Query().Get("latitude"), 64)
     longitude, errLng := strconv.ParseFloat(req.URL.Query().Get("longitude"), 64)

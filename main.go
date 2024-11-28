@@ -1,11 +1,23 @@
-package gocroot
+package main
 
 import (
-	"github.com/gocroot/route"
+	"log"
+	"net/http"
 
-	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
+	"github.com/gorilla/mux"
+	"github.com/gocroot/url"
+    "github.com/gocroot/controller"
 )
 
-func init() {
-	functions.HTTP("WebHook", route.URL)
+func main() {
+	// Inisialisasi router
+	router := mux.NewRouter()
+
+	// Menambahkan rute
+	router.HandleFunc("/", url.URL).Methods("GET")
+	router.HandleFunc("/api/nearby-roads", controller.NearbyRoadHandler).Methods("GET")
+
+	// Memulai server pada port 8080
+	log.Println("Server berjalan di http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
