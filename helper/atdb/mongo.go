@@ -216,3 +216,20 @@ func ReplaceOneDoc(db *mongo.Database, collection string, filter bson.M, doc int
 	}
 	return
 }
+
+func GetOneManyDocs[T any](db *mongo.Database, collection string, filter bson.M, limit int) (docs []T, err error) {
+    ctx := context.TODO()
+    opts := options.Find().SetLimit(int64(limit))
+    cursor, err := db.Collection(collection).Find(ctx, filter, opts)
+    if err != nil {
+        return nil, err
+    }
+    defer cursor.Close(ctx)
+
+    err = cursor.All(ctx, &docs)
+    if err != nil {
+        return nil, err
+    }
+
+    return docs, nil
+}
